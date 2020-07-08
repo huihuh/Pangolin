@@ -72,9 +72,16 @@ public class PangolinPlugin implements FlutterPlugin, MethodCallHandler, Activit
   // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
+    
+  public void setActivity(Activity activity) {
+    this.activity = activity;
+  }
+
+    
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "com.tongyangsheng.pangolin");
-    channel.setMethodCallHandler(new PangolinPlugin());
+    final PangolinPlugin instance = new PangolinPlugin();
+    instance.onAttachedToEngine(registrar.context(), registrar.messenger());
+    instance.setActivity(registrar.activity());
   }
 
   @Override
